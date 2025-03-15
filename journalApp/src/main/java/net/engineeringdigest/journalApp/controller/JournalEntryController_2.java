@@ -4,7 +4,9 @@ import net.engineeringdigest.journalApp.entity.JournalEntry;
 import net.engineeringdigest.journalApp.service.JournalEntryService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -35,6 +37,22 @@ public class JournalEntryController_2 {
     public JournalEntry getJournalEntryById(@PathVariable ObjectId myId){
         return journalEntryService.findById(myId).orElse(null);
     }
+
+//    @DeleteMapping("id/{myId}")
+//    public boolean deleteJournalEntryById(@PathVariable String myId) {
+//        try {
+//            ObjectId objectId = new ObjectId(myId);
+//            if (!journalEntryService.findById(objectId).isPresent()) {
+//                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Journal entry not found");
+//            }
+//            journalEntryService.deleteById(objectId);
+//            return true;
+//        } catch (IllegalArgumentException e) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid ObjectId format: " + myId);
+//        }
+//    }
+
+
 
     @DeleteMapping("id/{myId}")
     public boolean deleteJournalEntryById(@PathVariable ObjectId myId){
