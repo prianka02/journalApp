@@ -54,25 +54,11 @@ public class JournalEntryController_2 {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-//    @DeleteMapping("id/{myId}")
-//    public boolean deleteJournalEntryById(@PathVariable String myId) {
-//        try {
-//            ObjectId objectId = new ObjectId(myId);
-//            if (!journalEntryService.findById(objectId).isPresent()) {
-//                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Journal entry not found");
-//            }
-//            journalEntryService.deleteById(objectId);
-//            return true;
-//        } catch (IllegalArgumentException e) {
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid ObjectId format: " + myId);
-//        }
-//    }
 
 
-
-    @DeleteMapping("id/{myId}")
-    public ResponseEntity<?> deleteJournalEntryById(@PathVariable ObjectId myId){
-         journalEntryService.deleteById(myId);
+    @DeleteMapping("id/{userName}/{myId}")
+    public ResponseEntity<?> deleteJournalEntryById(@PathVariable ObjectId myId, @PathVariable String userName){
+         journalEntryService.deleteById(myId, userName);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

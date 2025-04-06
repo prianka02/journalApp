@@ -46,7 +46,11 @@ public class JournalEntryService {
 //                new ResponseStatusException(HttpStatus.NOT_FOUND, "Entry not found")));
 //    }
 
-    public void deleteById(ObjectId id){
-       journalEntryRepository.deleteById(id);
+    public void deleteById(ObjectId id, String userName){
+//      Now also delete from user based on journal object id
+        User user = userService.findByUsername(userName);
+        user.getJournalEntries().removeIf(x -> x.getId().equals(id));
+        userService.saveEntry(user);
+        journalEntryRepository.deleteById(id);
     }
 }
