@@ -2,12 +2,11 @@ package net.engineeringdigest.journalApp.service;
 
 import lombok.extern.slf4j.Slf4j;
 import net.engineeringdigest.journalApp.entity.JournalEntry;
+import net.engineeringdigest.journalApp.entity.User;
 import net.engineeringdigest.journalApp.repository.JournalEntryRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,10 +19,15 @@ public class JournalEntryService {
     @Autowired
     private JournalEntryRepository journalEntryRepository;
 
-    public void saveEntry(JournalEntry journalEntry){
+    @Autowired
+    private UserService userService;
+    public void saveEntry(JournalEntry journalEntry, String userName){
         try {
+            User user = userService.findByUsername(userName);
             journalEntry.setDate(LocalDateTime.now());
-            journalEntryRepository.save(journalEntry);
+            JournalEntry saved = journalEntryRepository.save(journalEntry);
+            user.getJournalEntries().add(saved);
+            userService.saveEntry(user);
         }catch (Exception e){
             log.error("Exception", e);
         }
