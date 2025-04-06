@@ -21,6 +21,7 @@ public class JournalEntryService {
 
     @Autowired
     private UserService userService;
+
     public void saveEntry(JournalEntry journalEntry, String userName){
         try {
             User user = userService.findByUsername(userName);
@@ -31,6 +32,16 @@ public class JournalEntryService {
         }catch (Exception e){
             log.error("Exception", e);
         }
+    }
+
+    public void saveEntry(JournalEntry journalEntry){
+           try {
+               journalEntryRepository.save(journalEntry);
+
+           }catch (Exception e){
+               log.error("Exception", e);
+           }
+
     }
 
     public List<JournalEntry> getAll(){
