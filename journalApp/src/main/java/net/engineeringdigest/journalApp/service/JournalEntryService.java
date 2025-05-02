@@ -30,10 +30,6 @@ public class JournalEntryService {
             journalEntry.setDate(LocalDateTime.now());
             JournalEntry saved = journalEntryRepository.save(journalEntry);
             user.getJournalEntries().add(saved);
-            user.setUsername(null);
-            // ADD transactional for this. so that this function will work together.
-            // if it is successful it will work properly and
-            // if any the line will not work then whole function property will roll back
             userService.saveEntry(user);
         }catch (Exception e){
             log.error("Exception", e);
